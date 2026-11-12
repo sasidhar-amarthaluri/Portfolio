@@ -7,20 +7,32 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background-color: #060911;
+    }
     .font-mono { font-family: 'Geist Mono', monospace; }
+    .glass-card {
+      background: linear-gradient(145deg, rgba(17, 24, 39, 0.7) 0%, rgba(9, 13, 22, 0.85) 100%);
+      backdrop-filter: blur(12px);
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, rgba(6, 9, 17, 0) 65%);
+    }
   </style>
 </head>
-<body class="bg-[#090d16] text-slate-200 antialiased selection:bg-blue-600 selection:text-white"
+<body class="text-slate-200 antialiased selection:bg-sky-500 selection:text-white"
       x-data="{ 
         modalOpen: false, 
         currentPdf: '', 
         currentTitle: '',
-        openPdf(url, title) {
+        currentTag: '',
+        openPdf(url, title, tag) {
           this.currentPdf = url;
           this.currentTitle = title;
+          this.currentTag = tag;
           this.modalOpen = true;
           document.body.style.overflow = 'hidden';
         },
@@ -32,133 +44,246 @@
       }"
       @keydown.escape.window="closeModal()">
 
-  <!-- Sticky Navbar -->
-  <nav class="sticky top-0 z-40 backdrop-blur-md bg-[#090d16]/85 border-b border-slate-800">
+  <!-- Ambient Top Glow -->
+  <div class="fixed inset-0 hero-glow pointer-events-none z-0"></div>
+
+  <!-- Minimalist Floating Header -->
+  <nav class="sticky top-0 z-40 backdrop-blur-md bg-[#060911]/80 border-b border-slate-800/60">
     <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-      <span class="text-sm font-semibold tracking-wider text-white font-mono">
+      <a href="#" class="text-sm font-bold tracking-wider text-white font-mono flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-sky-400"></span>
         SASIDHAR AMARTHALURI
-      </span>
-      <div class="flex items-center gap-4 text-xs md:text-sm font-medium text-slate-400">
+      </a>
+      <div class="flex items-center gap-6 text-xs md:text-sm font-medium text-slate-400">
+        <a href="#storyline" class="hover:text-white transition">Evolution</a>
         <a href="#work" class="hover:text-white transition">Case Studies</a>
-        <a href="#experience" class="hover:text-white transition">Trajectory</a>
-        <a href="resume.pdf" target="_blank" class="px-3 py-1.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600/30 transition">Resume ↗</a>
+        <a href="#capabilities" class="hover:text-white transition hidden sm:inline">Toolkit</a>
+        <a href="resume.pdf" target="_blank" class="px-3.5 py-1.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/30 hover:bg-sky-500/20 transition font-mono text-xs">
+          CV / Resume ↗
+        </a>
       </div>
     </div>
   </nav>
 
-  <main class="max-w-5xl mx-auto px-6 py-16 space-y-20">
+  <main class="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-24 space-y-28">
 
-    <!-- Hero Section -->
-    <header class="border-b border-slate-800 pb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 mb-6">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Open to Product & Strategy Roles
+    <!-- 1. NARRATIVE HERO -->
+    <header class="max-w-3xl space-y-6 pt-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono text-sky-400 bg-sky-950/50 border border-sky-800/50">
+        Product • Strategy • Systems
       </div>
-      <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
-        Product Strategy • Systems Thinking • Growth & Platforms
+      
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+        Bridging systems engineering with <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400">commercial product strategy.</span>
       </h1>
-      <p class="text-base md:text-lg text-slate-400 max-w-3xl leading-relaxed mb-8">
-        Computer Engineering foundation combined with MBA strategic rigor. Experienced in mapping complex data feeds, designing conversational automation, and solving commercial growth bottlenecks.
+      
+      <p class="text-base md:text-lg text-slate-400 leading-relaxed">
+        From architecting conversational workflows and real-time financial data feeds to sizing $500M+ market opportunities—I focus on turning ambiguous business problems into structured, scalable products.
       </p>
-      <div class="flex flex-wrap gap-4 text-xs font-mono">
-        <a href="https://linkedin.com" target="_blank" class="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition">LinkedIn ↗</a>
-        <a href="mailto:your-email@example.com" class="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition">Email ↗</a>
-        <a href="resume.pdf" target="_blank" class="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition">Download Resume (PDF) ↓</a>
+
+      <div class="flex flex-wrap items-center gap-3 pt-2 text-xs font-mono">
+        <a href="#work" class="px-5 py-2.5 rounded-lg bg-white text-slate-950 font-semibold hover:bg-slate-200 transition">
+          Explore Case Work ↓
+        </a>
+        <a href="https://linkedin.com" target="_blank" class="px-4 py-2.5 rounded-lg glass-card border border-slate-800 hover:border-slate-600 text-slate-300 hover:text-white transition">
+          LinkedIn ↗
+        </a>
+        <a href="mailto:your-email@example.com" class="px-4 py-2.5 rounded-lg glass-card border border-slate-800 hover:border-slate-600 text-slate-300 hover:text-white transition">
+          Email ↗
+        </a>
+        <a href="resume.pdf" target="_blank" class="px-4 py-2.5 rounded-lg glass-card border border-slate-800 hover:border-slate-600 text-slate-300 hover:text-white transition">
+          Full CV (PDF) ↗
+        </a>
       </div>
     </header>
 
-    <!-- Headline Metrics Banner (Aman Raj inspired) -->
-    <section>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-xl bg-slate-900/60 border border-slate-800">
-          <div class="text-3xl font-bold font-mono text-blue-400 mb-1">-35%</div>
-          <h3 class="text-sm font-semibold text-white">Branch Support Tickets</h3>
-          <p class="text-xs text-slate-400 mt-2">Automated conversational banking flows across 3,000+ branch locations using NLP intent mapping.</p>
+    <!-- 2. THE EVOLUTION STORYLINE (High-Level Arc, Not Resume Bullets) -->
+    <section id="storyline" class="space-y-10">
+      <div class="space-y-2">
+        <span class="text-xs font-mono uppercase tracking-widest text-sky-400">01 / The Trajectory</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">How My Lens Evolved</h2>
+        <p class="text-sm text-slate-400 max-w-2xl">
+          A progression from writing code and maintaining institutional data infrastructure to defining product roadmaps and market entry bets. *(Full role details are in my CV.)*
+        </p>
+      </div>
+
+      <!-- Visual 4-Stage Storyline Grid -->
+      <div class="grid md:grid-cols-4 gap-5 relative">
+        
+        <!-- Stage 1 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800/80 hover:border-sky-500/40 transition group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono text-slate-500 group-hover:text-sky-400 transition">STAGE 01</span>
+              <span class="w-2 h-2 rounded-full bg-slate-700 group-hover:bg-sky-400 transition"></span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">First-Principles Code</h3>
+            <p class="text-xs font-mono text-slate-400 mb-3">B.Tech Computer Engg · IIIT</p>
+            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+              Built the technical mental model: how data moves, scales, and breaks under constraints.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80">
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">Algorithms</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">SQL Schemas</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">SDLC</span>
+          </div>
         </div>
-        <div class="p-6 rounded-xl bg-slate-900/60 border border-slate-800">
-          <div class="text-3xl font-bold font-mono text-emerald-400 mb-1">$500M+</div>
-          <h3 class="text-sm font-semibold text-white">Market Sizing (TAM)</h3>
-          <p class="text-xs text-slate-400 mt-2">Analyzed micro-market pricing and 50+ institutional interviews for an investment platform MVP.</p>
+
+        <!-- Stage 2 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800/80 hover:border-sky-500/40 transition group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono text-slate-500 group-hover:text-sky-400 transition">STAGE 02</span>
+              <span class="w-2 h-2 rounded-full bg-slate-700 group-hover:bg-sky-400 transition"></span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Enterprise Systems & Data</h3>
+            <p class="text-xs font-mono text-slate-400 mb-3">Novac Tech · FactSet</p>
+            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+              Operated in high-stakes environments: automating customer flows and resolving real-time institutional market feeds.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80">
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">Conversational AI</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">Market Feeds</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">Python Tools</span>
+          </div>
         </div>
-        <div class="p-6 rounded-xl bg-slate-900/60 border border-slate-800">
-          <div class="text-3xl font-bold font-mono text-purple-400 mb-1">Zero-Error</div>
-          <h3 class="text-sm font-semibold text-white">Derivative Feed Automation</h3>
-          <p class="text-xs text-slate-400 mt-2">Standardized resolution SOPs and automated internal symbology generation for institutional feeds.</p>
+
+        <!-- Stage 3 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800/80 hover:border-sky-500/40 transition group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono text-slate-500 group-hover:text-sky-400 transition">STAGE 03</span>
+              <span class="w-2 h-2 rounded-full bg-slate-700 group-hover:bg-sky-400 transition"></span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Commercial & Market Rigor</h3>
+            <p class="text-xs font-mono text-slate-400 mb-3">MBA Int. Business · IIFT</p>
+            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+              Added the "Why" behind the build: unit economics, competitive positioning, and structured market sizing.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80">
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">TAM / SAM</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">Unit Economics</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300">GTM Strategy</span>
+          </div>
         </div>
+
+        <!-- Stage 4 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800/80 hover:border-sky-500/40 transition group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono text-sky-400">NOW · 04</span>
+              <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">0-to-1 Product & Growth</h3>
+            <p class="text-xs font-mono text-slate-400 mb-3">Erusu · Swiggy · Raptee</p>
+            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+              Synthesizing user discovery, funnel analytics, and rapid prototyping to ship high-leverage product bets.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80">
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-950/60 text-sky-300 border border-sky-800/40">0-to-1 MVP</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-950/60 text-sky-300 border border-sky-800/40">Funnel Growth</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-950/60 text-sky-300 border border-sky-800/40">Prototyping</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- Featured Case Studies -->
-    <section id="work" class="space-y-6">
-      <div class="flex items-center justify-between">
-        <div>
-          <div class="text-xs font-mono uppercase tracking-wider text-slate-400">Featured Work</div>
-          <h2 class="text-2xl font-bold text-white mt-1">Product & Strategy Case Studies</h2>
+    <!-- 3. SELECTED CASE WORK (Visual Story Cards + Modal Viewer) -->
+    <section id="work" class="space-y-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="space-y-2">
+          <span class="text-xs font-mono uppercase tracking-widest text-sky-400">02 / Proof of Thinking</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-white">Selected Case Studies & Decks</h2>
         </div>
-        <span class="text-xs font-mono text-slate-500">Click card to preview deck</span>
+        <span class="text-xs font-mono text-slate-400">Select any case to inspect the deck in-page</span>
       </div>
 
       <div class="grid md:grid-cols-2 gap-6">
-        <!-- Case Study 1 -->
-        <div class="p-6 rounded-xl bg-slate-900/40 border border-slate-800/80 hover:border-slate-700 transition flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-blue-950/60 text-blue-400 border border-blue-800/40">Growth & Funnels</span>
-              <span class="text-xs font-mono text-slate-500">MBA Strategy Deck</span>
+        
+        <!-- Case Card 1 -->
+        <article @click="openPdf('cases/case-study-1.pdf', 'Merchant Partner Onboarding Funnel', 'Growth & Unit Economics')"
+                 class="cursor-pointer glass-card p-8 rounded-2xl border border-slate-800 hover:border-sky-500/50 transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                Growth & Funnels
+              </span>
+              <span class="text-xs font-mono text-slate-500 group-hover:text-sky-400 transition">Deck Preview ↗</span>
             </div>
-            <h3 class="text-lg font-bold text-white mb-2">Merchant Partner Onboarding Optimization</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Analyzed multi-step drop-offs across merchant registration pipelines. Modeled CLTV vs. acquisition friction and introduced staged verification gates.
+            <h3 class="text-xl font-bold text-white group-hover:text-sky-300 transition">
+              Reducing Drop-Offs in Merchant Partner Onboarding
+            </h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Diagnosed verification friction across regional onboarding pipelines. Balanced compliance risk against CLTV by designing progressive activation gates.
             </p>
           </div>
-          <button @click="openPdf('cases/case-study-1.pdf', 'Merchant Partner Onboarding Optimization')" 
-                  class="w-full py-2.5 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs font-mono transition flex items-center justify-center gap-2">
-            <span>Preview Case Deck</span> ↗
-          </button>
-        </div>
+          <div class="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-400">Focus: <strong class="text-slate-200">CLTV · Conversion</strong></span>
+            <span class="text-sky-400 group-hover:translate-x-1 transition-transform">Open Deck →</span>
+          </div>
+        </article>
 
-        <!-- Case Study 2 Placeholder -->
-        <div class="p-6 rounded-xl bg-slate-900/40 border border-slate-800/80 hover:border-slate-700 transition flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">0-to-1 Strategy</span>
-              <span class="text-xs font-mono text-slate-500">Market Entry Deck</span>
+        <!-- Case Card 2 -->
+        <article @click="openPdf('cases/case-study-2.pdf', '0-to-1 Real Estate Investment Platform', 'Market Sizing & MVP')"
+                 class="cursor-pointer glass-card p-8 rounded-2xl border border-slate-800 hover:border-indigo-500/50 transition-all duration-300 group flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                0-to-1 Product Strategy
+              </span>
+              <span class="text-xs font-mono text-slate-500 group-hover:text-indigo-400 transition">Deck Preview ↗</span>
             </div>
-            <h3 class="text-lg font-bold text-white mb-2">EV Infrastructure Expansion Playbook</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              GTM roadmap and charging infrastructure placement modeling across Tier-1 and Tier-2 regional hubs based on commute density analytics.
+            <h3 class="text-xl font-bold text-white group-hover:text-indigo-300 transition">
+              Validating a $500M+ Fractional Real Estate Opportunity
+            </h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Synthesized 50+ stakeholder interviews and 5-year micro-market pricing trends across 30+ localities to define the core MVP scope and Agile sprint roadmap.
             </p>
           </div>
-          <button @click="openPdf('cases/case-study-1.pdf', 'EV Infrastructure Expansion Playbook')" 
-                  class="w-full py-2.5 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs font-mono transition flex items-center justify-center gap-2">
-            <span>Preview Case Deck</span> ↗
-          </button>
-        </div>
+          <div class="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-400">Focus: <strong class="text-slate-200">TAM · User Discovery</strong></span>
+            <span class="text-indigo-400 group-hover:translate-x-1 transition-transform">Open Deck →</span>
+          </div>
+        </article>
+
       </div>
     </section>
 
-    <!-- Career Trajectory Snapshot -->
-    <section id="experience" class="space-y-6">
-      <div class="text-xs font-mono uppercase tracking-wider text-slate-400">Career Trajectory</div>
-      <h2 class="text-2xl font-bold text-white">Experience & Background</h2>
-      
-      <div class="border-l border-slate-800 ml-3 space-y-8">
-        <div class="relative pl-6">
-          <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500"></div>
-          <span class="text-xs font-mono text-blue-400">Master of Business Administration (MBA)</span>
-          <h3 class="text-base font-semibold text-white">International Business & Strategy</h3>
-          <p class="text-xs text-slate-400 mt-1">Focused on unit economics, go-to-market execution, growth marketing, and competitive strategy cases.</p>
+    <!-- 4. CAPABILITIES & TOOLKIT (Visual Pillars) -->
+    <section id="capabilities" class="space-y-8">
+      <div class="space-y-2">
+        <span class="text-xs font-mono uppercase tracking-widest text-sky-400">03 / Capabilities</span>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">Core Skill Pillars</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-800/80 space-y-3">
+          <div class="text-sky-400 font-mono text-xs uppercase tracking-wider">Product & Strategy</div>
+          <h3 class="text-base font-bold text-white">Framing & Discovery</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            0-to-1 MVP Scoping, Market Sizing (TAM/SAM), User Interviews, PRDs & Specs, Agile Sprint Execution, Competitive Positioning.
+          </p>
         </div>
-        <div class="relative pl-6">
-          <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-          <span class="text-xs font-mono text-slate-400">Pre-MBA Platform & Data Roles</span>
-          <h3 class="text-base font-semibold text-white">FactSet • Erusu • Novac Technology</h3>
-          <p class="text-xs text-slate-400 mt-1">Real-time financial feeds, market entry discovery, Agile sprint management, and conversational automation workflows.</p>
+
+        <div class="glass-card p-6 rounded-2xl border border-slate-800/80 space-y-3">
+          <div class="text-indigo-400 font-mono text-xs uppercase tracking-wider">Systems & Data</div>
+          <h3 class="text-base font-bold text-white">Technical Fluency</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            SQL (Snowflake), Python Automation, Real-Time Market Data Feeds, Symbology Mapping, Conversational AI (Dialogflow), API Workflows.
+          </p>
         </div>
-        <div class="relative pl-6">
-          <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-          <span class="text-xs font-mono text-slate-400">Bachelor of Technology (B.Tech)</span>
-          <h3 class="text-base font-semibold text-white">Computer Engineering</h3>
-          <p class="text-xs text-slate-400 mt-1">Core foundations in data structures, algorithms, relational databases, and systems architecture.</p>
+
+        <div class="glass-card p-6 rounded-2xl border border-slate-800/80 space-y-3">
+          <div class="text-emerald-400 font-mono text-xs uppercase tracking-wider">Growth & Decisions</div>
+          <h3 class="text-base font-bold text-white">Commercial Analytics</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Onboarding Funnel Diagnostics, CLTV & Unit Economics, Go-To-Market Playbooks, Root-Cause Incident SOPs, Stakeholder Alignment.
+          </p>
         </div>
       </div>
     </section>
@@ -168,30 +293,42 @@
   <!-- In-Page PDF Modal Viewer -->
   <div x-show="modalOpen" 
        x-transition.opacity 
-       class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 md:p-8" 
+       class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 md:p-8" 
        style="display: none;">
-    <div class="bg-[#0f172a] border border-slate-700 w-full max-w-5xl h-[88vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl"
+    <div class="bg-[#0b101d] border border-slate-700/80 w-full max-w-5xl h-[88vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl"
          @click.outside="closeModal()">
       <!-- Modal Header -->
-      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/70">
-        <div>
-          <span class="text-xs font-mono text-blue-400 uppercase">Case Presentation Viewer</span>
+      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/90">
+        <div class="space-y-0.5">
+          <span class="text-[11px] font-mono text-sky-400 uppercase tracking-wider" x-text="currentTag"></span>
           <h3 class="text-sm md:text-base font-bold text-white truncate max-w-md md:max-w-xl" x-text="currentTitle"></h3>
         </div>
         <div class="flex items-center gap-3">
-          <a :href="currentPdf" target="_blank" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition">Open in Tab ↗</a>
-          <button @click="closeModal()" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-400 hover:bg-rose-900/60 transition">✕ Close</button>
+          <a :href="currentPdf" target="_blank" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+            Open Fullscreen ↗
+          </a>
+          <button @click="closeModal()" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 transition">
+            ✕ Close
+          </button>
         </div>
       </div>
-      <!-- Modal Body: Embedded PDF -->
+      <!-- Modal Body -->
       <div class="flex-1 bg-slate-950">
         <iframe :src="currentPdf" class="w-full h-full border-0"></iframe>
       </div>
     </div>
   </div>
 
-  <footer class="max-w-5xl mx-auto px-6 py-12 border-t border-slate-800/80 text-center text-xs font-mono text-slate-500">
-    Designed for clarity, systems thinking, and decision transparency.
+  <!-- Minimal Footer -->
+  <footer class="relative z-10 border-t border-slate-800/60 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+      <span>Sasidhar Amarthaluri · Product & Strategy</span>
+      <div class="flex items-center gap-5">
+        <a href="https://linkedin.com" target="_blank" class="hover:text-slate-300 transition">LinkedIn</a>
+        <a href="mailto:your-email@example.com" class="hover:text-slate-300 transition">Email</a>
+        <a href="resume.pdf" target="_blank" class="hover:text-slate-300 transition">Resume</a>
+      </div>
+    </div>
   </footer>
 
 </body>
