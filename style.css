@@ -79,7 +79,7 @@ section .sub { color: var(--muted); margin: 0 0 30px; max-width: 62ch; }
 .story p { max-width: 64ch; color: #d5d8dc; }
 
 /* skills */
-.tabs { display: flex; gap: 8px; overflow-x: auto; border-bottom: 1px solid var(--line2); }
+.tabs { display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; border-bottom: 1px solid var(--line2); }
 .tab { background: none; border: 0; font: inherit; font-weight: 700; color: var(--muted); padding: 10px 14px; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -1px; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 .skillpanel { padding-top: 22px; }
